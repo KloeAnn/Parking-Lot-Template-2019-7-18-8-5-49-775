@@ -2,17 +2,16 @@ package com.thoughtworks.parking_lot.model;
 
 import org.hibernate.annotations.Generated;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Entity
 public class ParkingLot {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @Column(name = "name", unique = true, length = 30)
@@ -24,6 +23,18 @@ public class ParkingLot {
 
     @Column(name = "position")
     private String position;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    @OneToMany(mappedBy = "parkingLot")
+    private List<Order> orders;
+
 
     public ParkingLot() {
     }
