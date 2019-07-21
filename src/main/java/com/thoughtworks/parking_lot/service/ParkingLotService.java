@@ -29,7 +29,4 @@ public class ParkingLotService {
         return parkingLotRepository.findAll();
     }
 
-    public List<ParkingLot> find() {
-        return parkingLotRepository.findAll();
-    }
 }

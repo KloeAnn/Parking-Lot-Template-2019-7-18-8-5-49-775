@@ -72,4 +72,5 @@ public class ParkingLotControllerTest {
                 .andExpect(jsonPath("$.length()").value(3));
     }
 
+
 }
