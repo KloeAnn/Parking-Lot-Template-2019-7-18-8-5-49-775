@@ -32,4 +32,10 @@ public class ParkingLotController {
     public ResponseEntity findParkingLotById(@PathVariable int parkingLotId) {
         return ResponseEntity.ok(parkingLotService.findParkingLotById(parkingLotId));
     }
+
+    @PutMapping("/parking-lots/{parkingLotId}")
+    public ResponseEntity updateParkingLotById(@PathVariable int parkingLotId, @RequestBody ParkingLot updateParkingLot) {
+        ParkingLot parkingLot = parkingLotService.updateParkingLotById(parkingLotId, updateParkingLot);
+        return (parkingLot != null) ? ResponseEntity.ok(parkingLot) : ResponseEntity.notFound().build();
+    }
 }

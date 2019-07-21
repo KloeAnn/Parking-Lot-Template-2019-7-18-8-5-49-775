@@ -84,12 +84,30 @@ public class ParkingLotControllerTest {
     }
 
     @Test
-    public void should_return_parking_lots_when_find_by_id() throws Exception {
+    public void should_return_parking_lot_by_id() throws Exception {
         Mockito.when(parkingLotService.findParkingLotById(Mockito.anyInt()))
                 .thenReturn(parkingLotList.get(0));
 
         mockMvc.perform(get("/parking-lots/{parkingLotId}", 1)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.capacity").value(10));
+    }
+
+    @Test
+    public void should_return_parking_lot_with_new_capacity_when_request_to_update() throws Exception {
+        ParkingLot parkingLot = new ParkingLot("name", 10, "Beijing");
+        Mockito.when(parkingLotService.updateParkingLotById(Mockito.anyInt(), Mockito.any()))
+                .thenReturn(parkingLot);
+        mockMvc.perform(put("/parking-lots/{parkingLotId}", 1)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\n" +
+                        "\t\"id\": 1,\n" +
+                        "\t\"name\": \"name\",\n" +
+                        "\t\"capacity\": 50,\n" +
+                        "\t\"position\": \"Beijing\"\n" +
+                        "}"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.capacity").value(10));

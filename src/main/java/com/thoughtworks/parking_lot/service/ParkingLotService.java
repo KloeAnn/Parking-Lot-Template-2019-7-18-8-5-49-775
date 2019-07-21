@@ -2,6 +2,7 @@ package com.thoughtworks.parking_lot.service;
 
 import com.thoughtworks.parking_lot.model.ParkingLot;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,16 @@ public class ParkingLotService {
 
     public ParkingLot findParkingLotById(int parkingLotId) {
         return parkingLotRepository.findById((long) parkingLotId).orElse(null);
+    }
+
+    @Transactional
+    public ParkingLot updateParkingLotById(int parkingLotId, ParkingLot updateParkingLot) {
+        ParkingLot parkingLot = findParkingLotById(parkingLotId);
+        if (null != parkingLot) {
+            BeanUtils.copyProperties(updateParkingLot, parkingLot, "id");
+            parkingLotRepository.save(parkingLot);
+        }
+        return parkingLot;
     }
 
 }
