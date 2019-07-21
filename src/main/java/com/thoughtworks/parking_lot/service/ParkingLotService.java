@@ -35,4 +35,8 @@ public class ParkingLotService {
         return (page == 0 || pageSize == 0 || pageSize > parkingLots.size()) ? parkingLots : parkingLotRepository.findAll(PageRequest.of(page -1, pageSize)).getContent();
     }
 
+    public ParkingLot findParkingLotById(int parkingLotId) {
+        return parkingLotRepository.findById((long) parkingLotId).orElse(null);
+    }
+
 }

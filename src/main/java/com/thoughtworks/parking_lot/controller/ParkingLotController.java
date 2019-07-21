@@ -23,8 +23,13 @@ public class ParkingLotController {
         return ResponseEntity.ok(parkingLotService.findAll());
     }
 
-    @GetMapping
+    @GetMapping("/parking-lots")
     public ResponseEntity findParkingLots(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "pageSize", defaultValue = "0") int pageSize) {
         return ResponseEntity.ok(parkingLotService.findParkingLots(page, pageSize));
+    }
+
+    @GetMapping("/parking-lots/{parkingLotId}")
+    public ResponseEntity findParkingLotById(@PathVariable int parkingLotId) {
+        return ResponseEntity.ok(parkingLotService.findParkingLotById(parkingLotId));
     }
 }
